@@ -28,6 +28,9 @@ class Employe
     #[ORM\Column(length: 50)]
     private ?string $sexe = null;
 
+    #[ORM\ManyToOne(inversedBy: 'idEmploye')]
+    private ?Allee $allee = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -89,6 +92,18 @@ class Employe
     public function setSexe(string $sexe): static
     {
         $this->sexe = $sexe;
+
+        return $this;
+    }
+
+    public function getAllee(): ?Allee
+    {
+        return $this->allee;
+    }
+
+    public function setAllee(?Allee $allee): static
+    {
+        $this->allee = $allee;
 
         return $this;
     }
