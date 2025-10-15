@@ -74,6 +74,10 @@ class Allee
                 $idEmploye->setAllee(null);
             }
         }
+
+        return $this;
+    }
+
     public function getCage(): ?Cage
     {
         return $this->cage;
