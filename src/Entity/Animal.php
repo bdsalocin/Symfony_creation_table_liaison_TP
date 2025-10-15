@@ -76,10 +76,7 @@ class Animal
     #[ORM\JoinColumn(nullable: false)]
     private ?Ordre $idOrdre = null;
 
-    public function __construct()
-    {
-        $this->vaccinations = new ArrayCollection();
-        $this->idMenu = new ArrayCollection();
+    /**
      * @var Collection<int, ListeMaladie>
      */
     #[ORM\ManyToMany(targetEntity: ListeMaladie::class, inversedBy: 'animals')]
@@ -91,6 +88,7 @@ class Animal
     #[ORM\ManyToMany(targetEntity: Comportement::class, inversedBy: 'animals')]
     private Collection $idComportement;
 
+
     /**
      * @var Collection<int, Adoptant>
      */
@@ -99,6 +97,8 @@ class Animal
 
     public function __construct()
     {
+        $this->vaccinations = new ArrayCollection();
+        $this->idMenu = new ArrayCollection();
         $this->idListeMaladie = new ArrayCollection();
         $this->idComportement = new ArrayCollection();
         $this->idAdoptant = new ArrayCollection();
@@ -218,6 +218,12 @@ class Animal
         if (!$this->vaccinations->contains($vaccination)) {
             $this->vaccinations->add($vaccination);
             $vaccination->addIdAnimal($this);
+        }
+
+        return $this;
+    }
+
+    /**
      * @return Collection<int, ListeMaladie>
      */
     public function getIdListeMaladie(): Collection
@@ -239,6 +245,10 @@ class Animal
         if ($this->vaccinations->removeElement($vaccination)) {
             $vaccination->removeIdAnimal($this);
         }
+
+        return $this;
+    }
+
     public function removeIdListeMaladie(ListeMaladie $idListeMaladie): static
     {
         $this->idListeMaladie->removeElement($idListeMaladie);
@@ -258,6 +268,12 @@ class Animal
     {
         if (!$this->idMenu->contains($idMenu)) {
             $this->idMenu->add($idMenu);
+        }
+
+        return $this;
+    }
+
+    /**
      * @return Collection<int, Comportement>
      */
     public function getIdComportement(): Collection
@@ -301,10 +317,14 @@ class Animal
     public function setIdCarnet(CarnetDeSante $idCarnet): static
     {
         $this->idCarnet = $idCarnet;
-    public function removeIdComportement(Comportement $idComportement): static
-    {
-        $this->idComportement->removeElement($idComportement);
 
+        return $this;
+    }
+
+        public function removeIdComportement(Comportement $idComportement): static
+        {
+        $this->idComportement->removeElement($idComportement);
+        
         return $this;
     }
 
@@ -340,6 +360,10 @@ class Animal
     public function setIdClasse(?Classe $idClasse): static
     {
         $this->idClasse = $idClasse;
+
+        return $this;
+    }
+
     /**
      * @return Collection<int, Adoptant>
      */
@@ -365,6 +389,10 @@ class Animal
     public function setIdOrdre(?Ordre $idOrdre): static
     {
         $this->idOrdre = $idOrdre;
+
+        return $this;
+    }
+
     public function removeIdAdoptant(Adoptant $idAdoptant): static
     {
         $this->idAdoptant->removeElement($idAdoptant);

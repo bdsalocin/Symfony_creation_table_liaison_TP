@@ -119,6 +119,10 @@ class Employe
     public function setAllee(?Allee $allee): static
     {
         $this->allee = $allee;
+
+        return $this;
+    }
+
     /**
      * @return Collection<int, Poste>
      */
