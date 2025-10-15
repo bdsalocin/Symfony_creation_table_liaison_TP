@@ -28,6 +28,8 @@ class Allee
     {
         $this->idEmploye = new ArrayCollection();
     }
+    #[ORM\ManyToOne(inversedBy: 'idAllee')]
+    private ?Cage $cage = null;
 
     public function getId(): ?int
     {
@@ -72,6 +74,14 @@ class Allee
                 $idEmploye->setAllee(null);
             }
         }
+    public function getCage(): ?Cage
+    {
+        return $this->cage;
+    }
+
+    public function setCage(?Cage $cage): static
+    {
+        $this->cage = $cage;
 
         return $this;
     }

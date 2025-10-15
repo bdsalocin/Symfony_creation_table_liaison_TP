@@ -27,6 +27,21 @@ class ListeMaladie
     public function __construct()
     {
         $this->carnetDeSantes = new ArrayCollection();
+     * @var Collection<int, Animal>
+     */
+    #[ORM\ManyToMany(targetEntity: Animal::class, mappedBy: 'idListeMaladie')]
+    private Collection $animals;
+
+    /**
+     * @var Collection<int, CarnetDeSante>
+     */
+    #[ORM\ManyToMany(targetEntity: CarnetDeSante::class, inversedBy: 'listemaladies')]
+    private Collection $idCarnetDeSante;
+
+    public function __construct()
+    {
+        $this->animals = new ArrayCollection();
+        $this->idCarnetDeSante = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -59,6 +74,18 @@ class ListeMaladie
         if (!$this->carnetDeSantes->contains($carnetDeSante)) {
             $this->carnetDeSantes->add($carnetDeSante);
             $carnetDeSante->addIdMaladie($this);
+     * @return Collection<int, Animal>
+     */
+    public function getAnimals(): Collection
+    {
+        return $this->animals;
+    }
+
+    public function addAnimal(Animal $animal): static
+    {
+        if (!$this->animals->contains($animal)) {
+            $this->animals->add($animal);
+            $animal->addIdListeMaladie($this);
         }
 
         return $this;
@@ -68,7 +95,35 @@ class ListeMaladie
     {
         if ($this->carnetDeSantes->removeElement($carnetDeSante)) {
             $carnetDeSante->removeIdMaladie($this);
+    public function removeAnimal(Animal $animal): static
+    {
+        if ($this->animals->removeElement($animal)) {
+            $animal->removeIdListeMaladie($this);
         }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, CarnetDeSante>
+     */
+    public function getIdCarnetDeSante(): Collection
+    {
+        return $this->idCarnetDeSante;
+    }
+
+    public function addIdCarnetDeSante(CarnetDeSante $idCarnetDeSante): static
+    {
+        if (!$this->idCarnetDeSante->contains($idCarnetDeSante)) {
+            $this->idCarnetDeSante->add($idCarnetDeSante);
+        }
+
+        return $this;
+    }
+
+    public function removeIdCarnetDeSante(CarnetDeSante $idCarnetDeSante): static
+    {
+        $this->idCarnetDeSante->removeElement($idCarnetDeSante);
 
         return $this;
     }
