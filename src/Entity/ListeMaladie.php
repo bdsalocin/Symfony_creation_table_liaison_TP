@@ -19,6 +19,14 @@ class ListeMaladie
     private ?string $nomMaladie = null;
 
     /**
+     * @var Collection<int, CarnetDeSante>
+     */
+    #[ORM\ManyToMany(targetEntity: CarnetDeSante::class, mappedBy: 'idMaladie')]
+    private Collection $carnetDeSantes;
+
+    public function __construct()
+    {
+        $this->carnetDeSantes = new ArrayCollection();
      * @var Collection<int, Animal>
      */
     #[ORM\ManyToMany(targetEntity: Animal::class, mappedBy: 'idListeMaladie')]
@@ -54,6 +62,18 @@ class ListeMaladie
     }
 
     /**
+     * @return Collection<int, CarnetDeSante>
+     */
+    public function getCarnetDeSantes(): Collection
+    {
+        return $this->carnetDeSantes;
+    }
+
+    public function addCarnetDeSante(CarnetDeSante $carnetDeSante): static
+    {
+        if (!$this->carnetDeSantes->contains($carnetDeSante)) {
+            $this->carnetDeSantes->add($carnetDeSante);
+            $carnetDeSante->addIdMaladie($this);
      * @return Collection<int, Animal>
      */
     public function getAnimals(): Collection
@@ -71,6 +91,10 @@ class ListeMaladie
         return $this;
     }
 
+    public function removeCarnetDeSante(CarnetDeSante $carnetDeSante): static
+    {
+        if ($this->carnetDeSantes->removeElement($carnetDeSante)) {
+            $carnetDeSante->removeIdMaladie($this);
     public function removeAnimal(Animal $animal): static
     {
         if ($this->animals->removeElement($animal)) {

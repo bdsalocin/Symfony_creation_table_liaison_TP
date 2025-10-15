@@ -30,6 +30,8 @@ class Employe
     #[ORM\Column(length: 50)]
     private ?string $sexe = null;
 
+    #[ORM\ManyToOne(inversedBy: 'idEmploye')]
+    private ?Allee $allee = null;
     /**
      * @var Collection<int, Poste>
      */
@@ -109,6 +111,14 @@ class Employe
         return $this;
     }
 
+    public function getAllee(): ?Allee
+    {
+        return $this->allee;
+    }
+
+    public function setAllee(?Allee $allee): static
+    {
+        $this->allee = $allee;
     /**
      * @return Collection<int, Poste>
      */

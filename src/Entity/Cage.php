@@ -19,6 +19,14 @@ class Cage
     private ?string $fonctionnalite = null;
 
     /**
+     * @var Collection<int, Animal>
+     */
+    #[ORM\OneToMany(targetEntity: Animal::class, mappedBy: 'idCage')]
+    private Collection $animals;
+
+    public function __construct()
+    {
+        $this->animals = new ArrayCollection();
      * @var Collection<int, Allee>
      */
     #[ORM\OneToMany(targetEntity: Allee::class, mappedBy: 'cage')]
@@ -54,6 +62,18 @@ class Cage
     }
 
     /**
+     * @return Collection<int, Animal>
+     */
+    public function getAnimals(): Collection
+    {
+        return $this->animals;
+    }
+
+    public function addAnimal(Animal $animal): static
+    {
+        if (!$this->animals->contains($animal)) {
+            $this->animals->add($animal);
+            $animal->setIdCage($this);
      * @return Collection<int, Allee>
      */
     public function getIdAllee(): Collection
@@ -71,6 +91,12 @@ class Cage
         return $this;
     }
 
+    public function removeAnimal(Animal $animal): static
+    {
+        if ($this->animals->removeElement($animal)) {
+            // set the owning side to null (unless already changed)
+            if ($animal->getIdCage() === $this) {
+                $animal->setIdCage(null);
     public function removeIdAllee(Allee $idAllee): static
     {
         if ($this->idAllee->removeElement($idAllee)) {
