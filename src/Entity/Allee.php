@@ -16,6 +16,9 @@ class Allee
     #[ORM\Column]
     private ?int $numeroAllee = null;
 
+    #[ORM\ManyToOne(inversedBy: 'idAllee')]
+    private ?Cage $cage = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -29,6 +32,18 @@ class Allee
     public function setNumeroAllee(int $numeroAllee): static
     {
         $this->numeroAllee = $numeroAllee;
+
+        return $this;
+    }
+
+    public function getCage(): ?Cage
+    {
+        return $this->cage;
+    }
+
+    public function setCage(?Cage $cage): static
+    {
+        $this->cage = $cage;
 
         return $this;
     }

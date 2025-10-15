@@ -16,6 +16,9 @@ class Poste
     #[ORM\Column(length: 15)]
     private ?string $nomPoste = null;
 
+    #[ORM\ManyToOne(inversedBy: 'idPoste')]
+    private ?Employe $employe = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -29,6 +32,18 @@ class Poste
     public function setNomPoste(string $nomPoste): static
     {
         $this->nomPoste = $nomPoste;
+
+        return $this;
+    }
+
+    public function getEmploye(): ?Employe
+    {
+        return $this->employe;
+    }
+
+    public function setEmploye(?Employe $employe): static
+    {
+        $this->employe = $employe;
 
         return $this;
     }

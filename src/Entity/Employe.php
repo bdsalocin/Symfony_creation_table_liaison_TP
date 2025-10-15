@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\EmployeRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: EmployeRepository::class)]
@@ -27,6 +29,20 @@ class Employe
 
     #[ORM\Column(length: 50)]
     private ?string $sexe = null;
+
+    /**
+     * @var Collection<int, Poste>
+     */
+    #[ORM\OneToMany(targetEntity: Poste::class, mappedBy: 'employe')]
+    private Collection $idPoste;
+
+    #[ORM\ManyToOne(inversedBy: 'idEmploye')]
+    private ?Cage $cage = null;
+
+    public function __construct()
+    {
+        $this->idPoste = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -89,6 +105,48 @@ class Employe
     public function setSexe(string $sexe): static
     {
         $this->sexe = $sexe;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Poste>
+     */
+    public function getIdPoste(): Collection
+    {
+        return $this->idPoste;
+    }
+
+    public function addIdPoste(Poste $idPoste): static
+    {
+        if (!$this->idPoste->contains($idPoste)) {
+            $this->idPoste->add($idPoste);
+            $idPoste->setEmploye($this);
+        }
+
+        return $this;
+    }
+
+    public function removeIdPoste(Poste $idPoste): static
+    {
+        if ($this->idPoste->removeElement($idPoste)) {
+            // set the owning side to null (unless already changed)
+            if ($idPoste->getEmploye() === $this) {
+                $idPoste->setEmploye(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function getCage(): ?Cage
+    {
+        return $this->cage;
+    }
+
+    public function setCage(?Cage $cage): static
+    {
+        $this->cage = $cage;
 
         return $this;
     }

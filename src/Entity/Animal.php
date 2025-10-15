@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\AnimalRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -37,6 +39,31 @@ class Animal
 
     #[ORM\Column(length: 8)]
     private ?string $sexeAnimal = null;
+
+    /**
+     * @var Collection<int, ListeMaladie>
+     */
+    #[ORM\ManyToMany(targetEntity: ListeMaladie::class, inversedBy: 'animals')]
+    private Collection $idListeMaladie;
+
+    /**
+     * @var Collection<int, Comportement>
+     */
+    #[ORM\ManyToMany(targetEntity: Comportement::class, inversedBy: 'animals')]
+    private Collection $idComportement;
+
+    /**
+     * @var Collection<int, Adoptant>
+     */
+    #[ORM\ManyToMany(targetEntity: Adoptant::class, inversedBy: 'animals')]
+    private Collection $idAdoptant;
+
+    public function __construct()
+    {
+        $this->idListeMaladie = new ArrayCollection();
+        $this->idComportement = new ArrayCollection();
+        $this->idAdoptant = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -135,6 +162,78 @@ class Animal
     public function setSexeAnimal(string $sexeAnimal): static
     {
         $this->sexeAnimal = $sexeAnimal;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, ListeMaladie>
+     */
+    public function getIdListeMaladie(): Collection
+    {
+        return $this->idListeMaladie;
+    }
+
+    public function addIdListeMaladie(ListeMaladie $idListeMaladie): static
+    {
+        if (!$this->idListeMaladie->contains($idListeMaladie)) {
+            $this->idListeMaladie->add($idListeMaladie);
+        }
+
+        return $this;
+    }
+
+    public function removeIdListeMaladie(ListeMaladie $idListeMaladie): static
+    {
+        $this->idListeMaladie->removeElement($idListeMaladie);
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Comportement>
+     */
+    public function getIdComportement(): Collection
+    {
+        return $this->idComportement;
+    }
+
+    public function addIdComportement(Comportement $idComportement): static
+    {
+        if (!$this->idComportement->contains($idComportement)) {
+            $this->idComportement->add($idComportement);
+        }
+
+        return $this;
+    }
+
+    public function removeIdComportement(Comportement $idComportement): static
+    {
+        $this->idComportement->removeElement($idComportement);
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Adoptant>
+     */
+    public function getIdAdoptant(): Collection
+    {
+        return $this->idAdoptant;
+    }
+
+    public function addIdAdoptant(Adoptant $idAdoptant): static
+    {
+        if (!$this->idAdoptant->contains($idAdoptant)) {
+            $this->idAdoptant->add($idAdoptant);
+        }
+
+        return $this;
+    }
+
+    public function removeIdAdoptant(Adoptant $idAdoptant): static
+    {
+        $this->idAdoptant->removeElement($idAdoptant);
 
         return $this;
     }

@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\ListeMaladieRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: ListeMaladieRepository::class)]
@@ -15,6 +17,24 @@ class ListeMaladie
 
     #[ORM\Column(length: 50)]
     private ?string $nomMaladie = null;
+
+    /**
+     * @var Collection<int, Animal>
+     */
+    #[ORM\ManyToMany(targetEntity: Animal::class, mappedBy: 'idListeMaladie')]
+    private Collection $animals;
+
+    /**
+     * @var Collection<int, CarnetDeSante>
+     */
+    #[ORM\ManyToMany(targetEntity: CarnetDeSante::class, inversedBy: 'listemaladies')]
+    private Collection $idCarnetDeSante;
+
+    public function __construct()
+    {
+        $this->animals = new ArrayCollection();
+        $this->idCarnetDeSante = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -29,6 +49,57 @@ class ListeMaladie
     public function setNomMaladie(string $nomMaladie): static
     {
         $this->nomMaladie = $nomMaladie;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Animal>
+     */
+    public function getAnimals(): Collection
+    {
+        return $this->animals;
+    }
+
+    public function addAnimal(Animal $animal): static
+    {
+        if (!$this->animals->contains($animal)) {
+            $this->animals->add($animal);
+            $animal->addIdListeMaladie($this);
+        }
+
+        return $this;
+    }
+
+    public function removeAnimal(Animal $animal): static
+    {
+        if ($this->animals->removeElement($animal)) {
+            $animal->removeIdListeMaladie($this);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, CarnetDeSante>
+     */
+    public function getIdCarnetDeSante(): Collection
+    {
+        return $this->idCarnetDeSante;
+    }
+
+    public function addIdCarnetDeSante(CarnetDeSante $idCarnetDeSante): static
+    {
+        if (!$this->idCarnetDeSante->contains($idCarnetDeSante)) {
+            $this->idCarnetDeSante->add($idCarnetDeSante);
+        }
+
+        return $this;
+    }
+
+    public function removeIdCarnetDeSante(CarnetDeSante $idCarnetDeSante): static
+    {
+        $this->idCarnetDeSante->removeElement($idCarnetDeSante);
 
         return $this;
     }
