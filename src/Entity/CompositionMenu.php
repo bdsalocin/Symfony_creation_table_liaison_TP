@@ -16,7 +16,7 @@ class CompositionMenu
     private ?int $id = null;
 
     #[ORM\Column]
-    private ?int $quantit√e = null;
+    private ?int $quantite = null;
 
     /**
      * @var Collection<int, Aliment>
@@ -34,14 +34,14 @@ class CompositionMenu
         return $this->id;
     }
 
-    public function getQuantit√e(): ?int
+    public function getQuantite(): ?int
     {
-        return $this->quantit√e;
+        return $this->quantite;
     }
 
-    public function setQuantit√e(int $quantit√e): static
+    public function setQuantite(int $quantite): static
     {
-        $this->quantit√e = $quantit√e;
+        $this->quantite = $quantite;
 
         return $this;
     }

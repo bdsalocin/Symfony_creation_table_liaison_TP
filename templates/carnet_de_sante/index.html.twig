@@ -1,0 +1,35 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}CarnetDeSante index{% endblock %}
+
+{% block body %}
+    <h1>CarnetDeSante index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>NumeroCarnet</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for carnet_de_sante in carnet_de_santes %}
+            <tr>
+                <td>{{ carnet_de_sante.id }}</td>
+                <td>{{ carnet_de_sante.numeroCarnet }}</td>
+                <td>
+                    <a href="{{ path('app_carnet_de_sante_show', {'id': carnet_de_sante.id}) }}">show</a>
+                    <a href="{{ path('app_carnet_de_sante_edit', {'id': carnet_de_sante.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="3">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_carnet_de_sante_new') }}">Create new</a>
+{% endblock %}

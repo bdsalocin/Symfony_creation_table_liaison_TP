@@ -1,0 +1,35 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}ListeVaccin index{% endblock %}
+
+{% block body %}
+    <h1>ListeVaccin index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>NomVaccin</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for liste_vaccin in liste_vaccins %}
+            <tr>
+                <td>{{ liste_vaccin.id }}</td>
+                <td>{{ liste_vaccin.nomVaccin }}</td>
+                <td>
+                    <a href="{{ path('app_liste_vaccin_show', {'id': liste_vaccin.id}) }}">show</a>
+                    <a href="{{ path('app_liste_vaccin_edit', {'id': liste_vaccin.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="3">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_liste_vaccin_new') }}">Create new</a>
+{% endblock %}
