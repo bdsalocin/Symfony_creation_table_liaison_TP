@@ -14,6 +14,7 @@ use App\Entity\ListeMaladie;
 use App\Entity\Menu;
 use App\Entity\Ordre;
 use App\Entity\Vaccination;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -26,15 +27,21 @@ class AnimalType extends AbstractType
         $builder
             ->add('nomAnimal')
             ->add('originePays')
-            ->add('dateNaissance')
-            ->add('dateArrivee')
+            ->add('dateNaissance', DateType::class, [
+                'widget' => 'single_text',
+            ])
+            ->add('dateArrivee', DateType::class, [
+                'widget' => 'single_text',
+            ])
             ->add('nomPere')
             ->add('nomMere')
             ->add('raceAnimal')
             ->add('sexeAnimal')
             ->add('vaccinations', EntityType::class, [
                 'class' => Vaccination::class,
-                'choice_label' => 'dateVaccination',
+                'choice_label' => function ($vaccination) {
+                    return $vaccination->getDateVaccination() ? $vaccination->getDateVaccination()->format('Y-m-d') : '';
+                },
                 'multiple' => true,
             ])
             ->add('idMenu', EntityType::class, [
