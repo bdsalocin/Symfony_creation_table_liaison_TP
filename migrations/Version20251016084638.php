@@ -10,7 +10,7 @@ use Doctrine\Migrations\AbstractMigration;
 /**
  * Auto-generated Migration: Please modify to your needs!
  */
-final class Version20251015175511 extends AbstractMigration
+final class Version20251016084638 extends AbstractMigration
 {
     public function getDescription(): string
     {
@@ -21,7 +21,7 @@ final class Version20251015175511 extends AbstractMigration
     {
         // this up() migration is auto-generated, please modify it to your needs
         $this->addSql('CREATE TABLE adoptant (id INT AUTO_INCREMENT NOT NULL, nom_adoptant VARCHAR(50) NOT NULL, prenom_adoptant VARCHAR(50) NOT NULL, adresse_adoptant VARCHAR(100) NOT NULL, PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
-        $this->addSql('CREATE TABLE adoptant_animal (id INT AUTO_INCREMENT NOT NULL, date_adoption DATE DEFAULT NULL, PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
+        $this->addSql('CREATE TABLE adoptant_animal (id INT AUTO_INCREMENT NOT NULL, adoptant_id INT NOT NULL, animal_id INT NOT NULL, date_adoption DATE DEFAULT NULL, INDEX IDX_763F83C08D8B49F9 (adoptant_id), INDEX IDX_763F83C08E962C16 (animal_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
         $this->addSql('CREATE TABLE aliment (id INT AUTO_INCREMENT NOT NULL, nom_aliment VARCHAR(50) NOT NULL, PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
         $this->addSql('CREATE TABLE allee (id INT AUTO_INCREMENT NOT NULL, cage_id INT DEFAULT NULL, numero_allee INT NOT NULL, INDEX IDX_771FD92A5A70E5B7 (cage_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
         $this->addSql('CREATE TABLE animal (id INT AUTO_INCREMENT NOT NULL, id_cage_id INT NOT NULL, id_carnet_id INT NOT NULL, id_espece_id INT NOT NULL, id_famille_id INT NOT NULL, id_classe_id INT NOT NULL, id_ordre_id INT NOT NULL, nom_animal VARCHAR(50) NOT NULL, origine_pays VARCHAR(50) NOT NULL, date_naissance DATE NOT NULL, date_arrivee DATE NOT NULL, nom_pere VARCHAR(50) NOT NULL, nom_mere VARCHAR(50) NOT NULL, race_animal VARCHAR(50) NOT NULL, sexe_animal VARCHAR(8) NOT NULL, INDEX IDX_6AAB231F84ED4CC7 (id_cage_id), UNIQUE INDEX UNIQ_6AAB231F7A15C931 (id_carnet_id), INDEX IDX_6AAB231FAD2CA25D (id_espece_id), INDEX IDX_6AAB231F322DFB53 (id_famille_id), INDEX IDX_6AAB231FF6B192E (id_classe_id), INDEX IDX_6AAB231FC24AA519 (id_ordre_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
@@ -51,6 +51,8 @@ final class Version20251015175511 extends AbstractMigration
         $this->addSql('CREATE TABLE vaccination_liste_vaccin (vaccination_id INT NOT NULL, liste_vaccin_id INT NOT NULL, INDEX IDX_187BC2074DDCCFA3 (vaccination_id), INDEX IDX_187BC207C6606A2F (liste_vaccin_id), PRIMARY KEY(vaccination_id, liste_vaccin_id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
         $this->addSql('CREATE TABLE vaccination_animal (vaccination_id INT NOT NULL, animal_id INT NOT NULL, INDEX IDX_59A902174DDCCFA3 (vaccination_id), INDEX IDX_59A902178E962C16 (animal_id), PRIMARY KEY(vaccination_id, animal_id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
         $this->addSql('CREATE TABLE messenger_messages (id BIGINT AUTO_INCREMENT NOT NULL, body LONGTEXT NOT NULL, headers LONGTEXT NOT NULL, queue_name VARCHAR(190) NOT NULL, created_at DATETIME NOT NULL COMMENT \'(DC2Type:datetime_immutable)\', available_at DATETIME NOT NULL COMMENT \'(DC2Type:datetime_immutable)\', delivered_at DATETIME DEFAULT NULL COMMENT \'(DC2Type:datetime_immutable)\', INDEX IDX_75EA56E0FB7336F0 (queue_name), INDEX IDX_75EA56E0E3BD61CE (available_at), INDEX IDX_75EA56E016BA31DB (delivered_at), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
+        $this->addSql('ALTER TABLE adoptant_animal ADD CONSTRAINT FK_763F83C08D8B49F9 FOREIGN KEY (adoptant_id) REFERENCES adoptant (id)');
+        $this->addSql('ALTER TABLE adoptant_animal ADD CONSTRAINT FK_763F83C08E962C16 FOREIGN KEY (animal_id) REFERENCES animal (id)');
         $this->addSql('ALTER TABLE allee ADD CONSTRAINT FK_771FD92A5A70E5B7 FOREIGN KEY (cage_id) REFERENCES cage (id)');
         $this->addSql('ALTER TABLE animal ADD CONSTRAINT FK_6AAB231F84ED4CC7 FOREIGN KEY (id_cage_id) REFERENCES cage (id)');
         $this->addSql('ALTER TABLE animal ADD CONSTRAINT FK_6AAB231F7A15C931 FOREIGN KEY (id_carnet_id) REFERENCES carnet_de_sante (id)');
@@ -88,6 +90,8 @@ final class Version20251015175511 extends AbstractMigration
     public function down(Schema $schema): void
     {
         // this down() migration is auto-generated, please modify it to your needs
+        $this->addSql('ALTER TABLE adoptant_animal DROP FOREIGN KEY FK_763F83C08D8B49F9');
+        $this->addSql('ALTER TABLE adoptant_animal DROP FOREIGN KEY FK_763F83C08E962C16');
         $this->addSql('ALTER TABLE allee DROP FOREIGN KEY FK_771FD92A5A70E5B7');
         $this->addSql('ALTER TABLE animal DROP FOREIGN KEY FK_6AAB231F84ED4CC7');
         $this->addSql('ALTER TABLE animal DROP FOREIGN KEY FK_6AAB231F7A15C931');
