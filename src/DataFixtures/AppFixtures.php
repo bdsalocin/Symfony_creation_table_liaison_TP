@@ -28,162 +28,184 @@ class AppFixtures extends Fixture
 {
     public function load(ObjectManager $manager): void
     {
-        // ------------------------------
-        // Famille, Classe, Ordre, Espece
-        // ------------------------------
-        $famille = new Famille();
-        $famille->setNomFamille('Felidae');
-        $manager->persist($famille);
+        $familles = [];
+        $classes = [];
+        $ordres = [];
+        $especes = [];
+        for ($i = 1; $i <= 20; $i++) {
+            $famille = new Famille();
+            $famille->setNomFamille('Famille ' . $i);
+            $manager->persist($famille);
+            $familles[] = $famille;
 
-        $classe = new Classe();
-        $classe->setTypeClasse('Mammifères');
-        $manager->persist($classe);
+            $classe = new Classe();
+            $classe->setTypeClasse('Classe ' . $i);
+            $manager->persist($classe);
+            $classes[] = $classe;
 
-        $ordre = new Ordre();
-        $ordre->setTypeOrdre('Carnivores');
-        $manager->persist($ordre);
+            $ordre = new Ordre();
+            $ordre->setTypeOrdre('Ordre ' . $i);
+            $manager->persist($ordre);
+            $ordres[] = $ordre;
 
-        $espece = new Espece();
-        $espece->setNomEspece('Lion');
-        $manager->persist($espece);
+            $espece = new Espece();
+            $espece->setNomEspece('Espece ' . $i);
+            $manager->persist($espece);
+            $especes[] = $espece;
+        }
 
-        // ------------------------------
-        // Cage et Allee
-        // ------------------------------
-        $cage = new Cage();
-        $cage->setFonctionnalite('Zone Tropicale');
-        $manager->persist($cage);
+        $cages = [];
+        $allees = [];
+        for ($i = 1; $i <= 20; $i++) {
+            $cage = new Cage();
+            $cage->setFonctionnalite('Fonctionnalite Cage ' . $i);
+            $manager->persist($cage);
+            $cages[] = $cage;
 
-        $allee = new Allee();
-        $allee->setNumeroAllee(1)
-              ->setCage($cage);
-        $manager->persist($allee);
+            $allee = new Allee();
+            $allee->setNumeroAllee($i)
+                  ->setCage($cage);
+            $manager->persist($allee);
+            $allees[] = $allee;
+        }
 
-        // ------------------------------
-        // Employe et Poste
-        // ------------------------------
-        $employe = new Employe();
-        $employe->setNomEmploye('Dupont')
-                ->setPrenomEmploye('Jean')
-                ->setAge(35)
-                ->setVille('Paris')
-                ->setSexe('M')
-                ->setAllee($allee)
-                ->setCage($cage);
-        $manager->persist($employe);
+        $employes = [];
+        $postes = [];
+        for ($i = 1; $i <= 20; $i++) {
+            $employe = new Employe();
+            $employe->setNomEmploye('Employe ' . $i)
+                    ->setPrenomEmploye('Prenom ' . $i)
+                    ->setAge(20 + $i)
+                    ->setVille('Ville ' . $i)
+                    ->setSexe($i % 2 === 0 ? 'M' : 'F')
+                    ->setAllee($allees[($i - 1) % 20])
+                    ->setCage($cages[($i - 1) % 20]);
+            $manager->persist($employe);
+            $employes[] = $employe;
 
-        $poste = new Poste();
-        $poste->setNomPoste('Soigneur')
-              ->setEmploye($employe);
-        $manager->persist($poste);
+            $poste = new Poste();
+            $poste->setNomPoste('Poste ' . $i)
+                  ->setEmploye($employe);
+            $manager->persist($poste);
+            $postes[] = $poste;
+        }
 
-        // ------------------------------
-        // Aliment et CompositionMenu
-        // ------------------------------
-        $aliment1 = new Aliment();
-        $aliment1->setNomAliment('Croquettes');
-        $manager->persist($aliment1);
+        $aliments = [];
+        for ($i = 1; $i <= 20; $i++) {
+            $aliment = new Aliment();
+            $aliment->setNomAliment('Aliment ' . $i);
+            $manager->persist($aliment);
+            $aliments[] = $aliment;
+        }
 
-        $aliment2 = new Aliment();
-        $aliment2->setNomAliment('Foie');
-        $manager->persist($aliment2);
+        $compositions = [];
+        for ($i = 1; $i <= 20; $i++) {
+            $composition = new CompositionMenu();
+            $composition->setQuantite(50 + $i * 2);
+            $composition->addIdAliment($aliments[($i - 1) % 20]);
+            $composition->addIdAliment($aliments[($i) % 20]);
+            $manager->persist($composition);
+            $compositions[] = $composition;
+        }
 
-        $composition = new CompositionMenu();
-        $composition->setQuantite(100);
-        $composition->addIdAliment($aliment1);
-        $composition->addIdAliment($aliment2);
-        $manager->persist($composition);
+        $menus = [];
+        for ($i = 1; $i <= 20; $i++) {
+            $menu = new Menu();
+            $menu->setNomMenu('Menu ' . $i);
+            $menu->addIdCompoMenu($compositions[($i - 1) % 20]);
+            $menu->addIdCompoMenu($compositions[($i) % 20]);
+            $manager->persist($menu);
+            $menus[] = $menu;
+        }
 
-        // ------------------------------
-        // Menu
-        // ------------------------------
-        $menu = new Menu();
-        $menu->setNomMenu('Menu Principal');
-        $menu->addIdCompoMenu($composition);
-        $manager->persist($menu);
+        $comportements = [];
+        for ($i = 1; $i <= 20; $i++) {
+            $comportement = new Comportement();
+            $comportement->setTypeComportement('Comportement ' . $i);
+            $manager->persist($comportement);
+            $comportements[] = $comportement;
+        }
 
-        // ------------------------------
-        // Comportement
-        // ------------------------------
-        $comportement = new Comportement();
-        $comportement->setTypeComportement('Sociable');
-        $manager->persist($comportement);
+        $maladies = [];
+        for ($i = 1; $i <= 20; $i++) {
+            $maladie = new ListeMaladie();
+            $maladie->setNomMaladie('Maladie ' . $i);
+            $manager->persist($maladie);
+            $maladies[] = $maladie;
+        }
 
-        // ------------------------------
-        // ListeMaladie et ListeVaccin
-        // ------------------------------
-        $maladie = new ListeMaladie();
-        $maladie->setNomMaladie('Grippe');
-        $manager->persist($maladie);
+        $vaccins = [];
+        for ($i = 1; $i <= 20; $i++) {
+            $vaccinListe = new ListeVaccin();
+            $vaccinListe->setNomVaccin('Vaccin ' . $i);
+            $manager->persist($vaccinListe);
+            $vaccins[] = $vaccinListe;
+        }
 
-        $vaccinListe = new ListeVaccin();
-        $vaccinListe->setNomVaccin('Tétanos');
-        $manager->persist($vaccinListe);
+        $carnets = [];
+        for ($i = 1; $i <= 20; $i++) {
+            $carnet = new CarnetDeSante();
+            $carnet->setNumeroCarnet($i);
+            $manager->persist($carnet);
+            $carnets[] = $carnet;
+        }
 
-        // ------------------------------
-        // CarnetDeSante
-        // ------------------------------
-        $carnet = new CarnetDeSante();
-        $carnet->setNumeroCarnet(1);
-        $manager->persist($carnet);
+        $animals = [];
+        for ($i = 1; $i <= 20; $i++) {
+            $animal = new Animal();
+            $animal->setNomAnimal('Animal ' . $i)
+                   ->setOriginePays('Pays ' . $i)
+                   ->setNomPere('Pere ' . $i)
+                   ->setNomMere('Mere ' . $i)
+                   ->setRaceAnimal('Race ' . $i)
+                   ->setSexeAnimal($i % 2 === 0 ? 'M' : 'F')
+                   ->setDateNaissance(new \DateTime('2018-01-01 +' . ($i - 1) . ' days'))
+                   ->setDateArrivee(new \DateTime('2020-06-01 +' . ($i - 1) . ' days'))
+                   ->setIdCage($cages[($i - 1) % 20])
+                   ->setIdCarnet($carnets[($i - 1) % 20])
+                   ->setIdClasse($classes[($i - 1) % 20])
+                   ->setIdFamille($familles[($i - 1) % 20])
+                   ->setIdOrdre($ordres[($i - 1) % 20])
+                   ->setIdEspece($especes[($i - 1) % 20]);
+            $animal->addIdMenu($menus[($i - 1) % 20]);
+            $animal->addIdComportement($comportements[($i - 1) % 20]);
+            $animal->addIdListeMaladie($maladies[($i - 1) % 20]);
+            $manager->persist($animal);
+            $animals[] = $animal;
+        }
 
-        // ------------------------------
-        // Animal
-        // ------------------------------
-        $animal = new Animal();
-        $animal->setNomAnimal('Simba')
-               ->setOriginePays('Kenya')
-               ->setNomPere('Mufasa')
-               ->setNomMere('Sarabi')
-               ->setRaceAnimal('Lion')
-               ->setSexeAnimal('M')
-               ->setDateNaissance(new \DateTime('2018-01-01'))
-               ->setDateArrivee(new \DateTime('2020-06-01'))
-               ->setIdCage($cage)
-               ->setIdCarnet($carnet)
-               ->setIdClasse($classe)
-               ->setIdFamille($famille)
-               ->setIdOrdre($ordre)
-               ->setIdEspece($espece);
-        $animal->addIdMenu($menu);
-        $animal->addIdComportement($comportement);
-        $animal->addIdListeMaladie($maladie);
-        $manager->persist($animal);
+        $adoptants = [];
+        for ($i = 1; $i <= 20; $i++) {
+            $adoptant = new Adoptant();
+            $adoptant->setNomAdoptant('Adoptant ' . $i)
+                     ->setPrenomAdoptant('PrenomAdoptant ' . $i)
+                     ->setAdresseAdoptant('Adresse ' . $i);
 
-        // ------------------------------
-        // Adoptant et liaison
-        // ------------------------------
-        $adoptant = new Adoptant();
-        $adoptant->setNomAdoptant('Martin')
-                 ->setPrenomAdoptant('Alice')
-                 ->setAdresseAdoptant('123 Rue Exemple, Paris');
-        $adoptant->addAnimal($animal);
-        $manager->persist($adoptant);
+            $adoptant->addAnimal($animals[($i - 1) % 20]);
+            $manager->persist($adoptant);
+            $adoptants[] = $adoptant;
+        }
 
-        $adoptantAnimal = new AdoptantAnimal();
-        $adoptantAnimal->setDateAdoption(new \DateTime('2023-01-01'))
-                       ->setAdoptant($adoptant)
-                       ->setAnimal($animal);
-        $manager->persist($adoptantAnimal);
+        for ($i = 1; $i <= 20; $i++) {
+            $adoptantAnimal = new AdoptantAnimal();
+            $adoptantAnimal->setDateAdoption(new \DateTime('2023-01-01 +' . ($i - 1) . ' days'))
+                           ->setAdoptant($adoptants[($i - 1) % 20])
+                           ->setAnimal($animals[($i - 1) % 20]);
+            $manager->persist($adoptantAnimal);
+        }
 
-        // ------------------------------
-        // Vaccination
-        // ------------------------------
-        $vaccination = new Vaccination();
-        $vaccination->setDateVaccination(new \DateTime('2023-01-10'))
-                    ->setDateProchaineVaccination(new \DateTime('2024-01-10'))
-                    ->setNumeroVaccination(1);
-        $vaccination->addIdAnimal($animal);
-        $vaccination->addIdListeVaccin($vaccinListe);
-        $manager->persist($vaccination);
+        for ($i = 1; $i <= 20; $i++) {
+            $vaccination = new Vaccination();
+            $vaccination->setDateVaccination(new \DateTime('2023-01-10 +' . ($i - 1) . ' days'))
+                        ->setDateProchaineVaccination(new \DateTime('2024-01-10 +' . ($i - 1) . ' days'))
+                        ->setNumeroVaccination($i);
+            $vaccination->addIdAnimal($animals[($i - 1) % 20]);
+            $vaccination->addIdListeVaccin($vaccins[($i - 1) % 20]);
+            $manager->persist($vaccination);
+            $carnets[($i - 1) % 20]->addIdVaccination($vaccination);
+            $carnets[($i - 1) % 20]->addIdMaladie($maladies[($i - 1) % 20]);
+        }
 
-        // Relier carnet à la vaccination
-        $carnet->addIdVaccination($vaccination);
-        $carnet->addIdMaladie($maladie);
-
-        // ------------------------------
-        // Flush final
-        // ------------------------------
         $manager->flush();
     }
 }
