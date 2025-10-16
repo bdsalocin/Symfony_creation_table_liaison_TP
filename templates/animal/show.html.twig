@@ -3,6 +3,7 @@
 {% block title %}Animal{% endblock %}
 
 {% block body %}
+<main>
     <h1>Animal</h1>
 
     <table class="table">
@@ -51,4 +52,5 @@
     <a href="{{ path('app_animal_edit', {'id': animal.id}) }}">edit</a>
 
     {{ include('animal/_delete_form.html.twig') }}
+    </main>
 {% endblock %}
