@@ -1,0 +1,35 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}AdoptantAnimal index{% endblock %}
+
+{% block body %}
+    <h1>AdoptantAnimal index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>DateAdoption</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for adoptant_animal in adoptant_animals %}
+            <tr>
+                <td>{{ adoptant_animal.id }}</td>
+                <td>{{ adoptant_animal.dateAdoption ? adoptant_animal.dateAdoption|date('Y-m-d') : '' }}</td>
+                <td>
+                    <a href="{{ path('app_adoptant_animal_show', {'id': adoptant_animal.id}) }}">show</a>
+                    <a href="{{ path('app_adoptant_animal_edit', {'id': adoptant_animal.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="3">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_adoptant_animal_new') }}">Create new</a>
+{% endblock %}

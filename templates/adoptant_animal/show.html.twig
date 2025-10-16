@@ -1,0 +1,26 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}AdoptantAnimal{% endblock %}
+
+{% block body %}
+    <h1>AdoptantAnimal</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ adoptant_animal.id }}</td>
+            </tr>
+            <tr>
+                <th>DateAdoption</th>
+                <td>{{ adoptant_animal.dateAdoption ? adoptant_animal.dateAdoption|date('Y-m-d') : '' }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_adoptant_animal_index') }}">back to list</a>
+
+    <a href="{{ path('app_adoptant_animal_edit', {'id': adoptant_animal.id}) }}">edit</a>
+
+    {{ include('adoptant_animal/_delete_form.html.twig') }}
+{% endblock %}
