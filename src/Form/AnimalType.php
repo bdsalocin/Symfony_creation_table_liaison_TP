@@ -83,7 +83,6 @@ class AnimalType extends AbstractType
                 'class' => Comportement::class,
                 'choice_label' => 'typeComportement',
                 'multiple' => false,
-                'expanded' => false,
             ])
             ->add('idAdoptant', EntityType::class, [
                 'class' => Adoptant::class,
