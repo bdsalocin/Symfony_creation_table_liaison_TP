@@ -17,6 +17,7 @@
                 <th>Race Animal</th>
                 <th>Comportement</th>
                 <th>Id adoptant</th>
+                <th>Est adoptable ?</th>
                 <th>actions</th>
                 
             </tr>
@@ -36,6 +37,13 @@
                 {% else %}
                 Aucun
                 {% endfor %}</td>
+                <td>
+                {% if animal.idComportement.typeComportement == 'Domestique' %}
+                Oui
+                {% else %}
+                Non
+                {% endif %}
+                </td>
 
                 <td>
                     <a href="{{ path('app_animal_show', {'id': animal.id}) }}">show</a>
