@@ -9,16 +9,17 @@
     <table class="table">
         <thead>
             <tr>
-                
+                <th>Voir ou modifier</th>
                 <th>Nom</th>
                 <th>Pays d'origine</th>
                 <th>Date de Naissance</th>
                 <th>Date d' Arrivee</th>
                 <th>Race Animal</th>
                 <th>Comportement</th>
-                <th>Id adoptant</th>
-                <th>Est adoptable ?</th>
+                <th>Id adoptant</th>    
+                <th>Est adopté ?</th>
                 <th>actions</th>
+
                 
             </tr>
         </thead>
@@ -26,36 +27,39 @@
         {% for animal in animals %}
             <tr>
                
+                <td>
+                <a href="{{ path('app_animal_show', {'id': animal.id}) }}">show</a>
+                <a href="{{ path('app_animal_edit', {'id': animal.id}) }}">edit</a>
+                </td>
                 <td>{{ animal.nomAnimal }}</td>
                 <td>{{ animal.originePays }}</td>
                 <td>{{ animal.dateNaissance ? animal.dateNaissance|date('Y-m-d') : '' }}</td>
                 <td>{{ animal.dateArrivee ? animal.dateArrivee|date('Y-m-d') : '' }}</td>
                 <td>{{ animal.raceAnimal }}</td>
                 <td>{{ animal.idComportement.typeComportement }}</td>
-                <td>{% for adoptant in animal.idAdoptant %}
-                {{ adoptant.nomAdoptant }}<br>
-                {% else %}
-                Aucun
-                {% endfor %}</td>
-                <td>
-                {% if animal.idComportement.typeComportement == 'Domestique' and animal.idAdoptant is not null %} 
-                Oui
-                {% else %}
-                Non
-                {% endif %}
-                </td>
 
+                <td>Bonjour</td>
                 <td>
-                    <a href="{{ path('app_animal_show', {'id': animal.id}) }}">show</a>
-                    <a href="{{ path('app_animal_edit', {'id': animal.id}) }}">edit</a>
-                    <a href="{{ path('app_adoptant_show', {'id': animal.id}) }}">voir son adoptant</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="10">no records found</td>
-            </tr>
-        {% endfor %}
+                    
+                    {% if animal.idAdoptant is null %}
+                        <a href="{{ path('app_adoptant_show', {'id': animal.id}) }}">voir son adoptant</a>
+                        {% else %}
+                            Cet animal est n'est pas adopté
+                            {% endif %}
+                        </td>
+                        
+                        <td>{% if  animal.idComportement.typeComportement == 'Domestique' and animal.adoptable is null %}
+                        <button><a href="{{ path('app_adoptant_new') }}">Adopter</a></button>
+                        {% else %}
+                            Non adoptable
+                            {% endif %}
+                        </td>
+                    </tr>
+                    {% else %}
+                        <tr>
+                            <td colspan="10">no records found</td>
+                        </tr>
+                        {% endfor %}
         </tbody>
     </table>
 

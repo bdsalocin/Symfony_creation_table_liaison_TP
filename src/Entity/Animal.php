@@ -56,8 +56,8 @@ class Animal
     #[ORM\JoinColumn(nullable: false)]
     private ?Cage $idCage = null;
 
-    #[ORM\OneToOne(inversedBy: 'animal', cascade: ['persist', 'remove'])]
-    #[ORM\JoinColumn(nullable: false)]
+    #[ORM\OneToOne(inversedBy: 'animal', cascade: ['persist', 'remove'], orphanRemoval: true)]
+    #[ORM\JoinColumn(nullable: false, onDelete: 'CASCADE')]
     private ?CarnetDeSante $idCarnet = null;
 
     #[ORM\ManyToOne(inversedBy: 'animals')]
