@@ -88,6 +88,10 @@ class AnimalType extends AbstractType
                 'choice_label' => 'id',
                 'multiple' => true,
             ])
+            ->add('adoptable', CheckboxType::class, [
+            'label' => 'Adoptable',
+            'required' => false,
+            ])
         ;
     }
 

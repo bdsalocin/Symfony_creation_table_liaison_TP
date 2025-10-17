@@ -18,6 +18,7 @@
                 <th>Nom Mere</th>
                 <th>Race Animal</th>
                 <th>Sexe Animal</th>
+                <th>Id adoptant</th>
                 <th>actions</th>
                 
             </tr>
@@ -34,6 +35,12 @@
                 <td>{{ animal.nomMere }}</td>
                 <td>{{ animal.raceAnimal }}</td>
                 <td>{{ animal.sexeAnimal }}</td>
+                <td>{% for adoptant in animal.idAdoptant %}
+                {{ adoptant.nomAdoptant }}<br>
+                {% else %}
+                Aucun
+            {% endfor %}
+            </td>
                 <td>
                     <a href="{{ path('app_animal_show', {'id': animal.id}) }}">show</a>
                     <a href="{{ path('app_animal_edit', {'id': animal.id}) }}">edit</a>

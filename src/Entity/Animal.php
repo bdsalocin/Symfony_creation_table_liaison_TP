@@ -40,6 +40,9 @@ class Animal
     #[ORM\Column(length: 8)]
     private ?string $sexeAnimal = null;
 
+    #[ORM\Column]
+    private bool $adoptable;
+
     /**
      * @var Collection<int, Vaccination>
      */
@@ -102,6 +105,7 @@ class Animal
         $this->idListeMaladie = new ArrayCollection();
         $this->idComportement = new ArrayCollection();
         $this->idAdoptant = new ArrayCollection();
+        $this->adoptable = true;
     }
 
     public function getId(): ?int
@@ -201,6 +205,18 @@ class Animal
     public function setSexeAnimal(string $sexeAnimal): static
     {
         $this->sexeAnimal = $sexeAnimal;
+
+        return $this;
+    }
+
+    public function isAdoptable(): bool
+    {
+        return $this->adoptable;
+    }
+
+    public function setAdoptable(bool $adoptable): self
+    {
+        $this->adoptable = $adoptable;
 
         return $this;
     }
