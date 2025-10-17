@@ -175,25 +175,6 @@ class AppFixtures extends Fixture
             $animals[] = $animal;
         }
 
-        $adoptants = [];
-        for ($i = 1; $i <= 20; $i++) {
-            $adoptant = new Adoptant();
-            $adoptant->setNomAdoptant('Adoptant ' . $i)
-                ->setPrenomAdoptant('PrenomAdoptant ' . $i)
-                ->setAdresseAdoptant('Adresse ' . $i);
-
-            $adoptant->addAnimal($animals[($i - 1) % 20]);
-            $manager->persist($adoptant);
-            $adoptants[] = $adoptant;
-        }
-
-        for ($i = 1; $i <= 20; $i++) {
-            $adoptantAnimal = new AdoptantAnimal();
-            $adoptantAnimal->setDateAdoption(new \DateTime('2023-01-01 +' . ($i - 1) . ' days'))
-                ->setAdoptant($adoptants[($i - 1) % 20])
-                ->setAnimal($animals[($i - 1) % 20]);
-            $manager->persist($adoptantAnimal);
-        }
 
         for ($i = 1; $i <= 20; $i++) {
             $vaccination = new Vaccination();
