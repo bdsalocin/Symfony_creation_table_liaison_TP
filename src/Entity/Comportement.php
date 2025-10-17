@@ -21,7 +21,7 @@ class Comportement
     /**
      * @var Collection<int, Animal>
      */
-    #[ORM\ManyToMany(targetEntity: Animal::class, mappedBy: 'idComportement')]
+    #[ORM\OneToMany(targetEntity: Animal::class, mappedBy: 'idComportement')]
     private Collection $animals;
 
     public function __construct()
@@ -58,7 +58,7 @@ class Comportement
     {
         if (!$this->animals->contains($animal)) {
             $this->animals->add($animal);
-            $animal->addIdComportement($this);
+            $animal->setIdComportement($this);
         }
 
         return $this;
@@ -67,7 +67,7 @@ class Comportement
     public function removeAnimal(Animal $animal): static
     {
         if ($this->animals->removeElement($animal)) {
-            $animal->removeIdComportement($this);
+            $animal->setIdComportement(null);
         }
 
         return $this;

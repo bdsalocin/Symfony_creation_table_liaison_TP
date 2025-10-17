@@ -10,7 +10,7 @@ use Doctrine\Migrations\AbstractMigration;
 /**
  * Auto-generated Migration: Please modify to your needs!
  */
-final class Version20251016120719 extends AbstractMigration
+final class Version20251017084342 extends AbstractMigration
 {
     public function getDescription(): string
     {
@@ -24,10 +24,9 @@ final class Version20251016120719 extends AbstractMigration
         $this->addSql('CREATE TABLE adoptant_animal (id INT AUTO_INCREMENT NOT NULL, adoptant_id INT NOT NULL, animal_id INT NOT NULL, date_adoption DATE DEFAULT NULL, INDEX IDX_763F83C08D8B49F9 (adoptant_id), INDEX IDX_763F83C08E962C16 (animal_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
         $this->addSql('CREATE TABLE aliment (id INT AUTO_INCREMENT NOT NULL, nom_aliment VARCHAR(50) NOT NULL, PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
         $this->addSql('CREATE TABLE allee (id INT AUTO_INCREMENT NOT NULL, cage_id INT DEFAULT NULL, numero_allee INT NOT NULL, INDEX IDX_771FD92A5A70E5B7 (cage_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
-        $this->addSql('CREATE TABLE animal (id INT AUTO_INCREMENT NOT NULL, id_cage_id INT NOT NULL, id_carnet_id INT NOT NULL, id_espece_id INT NOT NULL, id_famille_id INT NOT NULL, id_classe_id INT NOT NULL, id_ordre_id INT NOT NULL, nom_animal VARCHAR(50) NOT NULL, origine_pays VARCHAR(50) NOT NULL, date_naissance DATE NOT NULL, date_arrivee DATE NOT NULL, nom_pere VARCHAR(50) NOT NULL, nom_mere VARCHAR(50) NOT NULL, race_animal VARCHAR(50) NOT NULL, sexe_animal VARCHAR(8) NOT NULL, INDEX IDX_6AAB231F84ED4CC7 (id_cage_id), UNIQUE INDEX UNIQ_6AAB231F7A15C931 (id_carnet_id), INDEX IDX_6AAB231FAD2CA25D (id_espece_id), INDEX IDX_6AAB231F322DFB53 (id_famille_id), INDEX IDX_6AAB231FF6B192E (id_classe_id), INDEX IDX_6AAB231FC24AA519 (id_ordre_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
+        $this->addSql('CREATE TABLE animal (id INT AUTO_INCREMENT NOT NULL, id_cage_id INT NOT NULL, id_carnet_id INT NOT NULL, id_espece_id INT NOT NULL, id_famille_id INT NOT NULL, id_classe_id INT NOT NULL, id_ordre_id INT NOT NULL, id_comportement_id INT NOT NULL, nom_animal VARCHAR(50) NOT NULL, origine_pays VARCHAR(50) NOT NULL, date_naissance DATE NOT NULL, date_arrivee DATE NOT NULL, nom_pere VARCHAR(50) NOT NULL, nom_mere VARCHAR(50) NOT NULL, race_animal VARCHAR(50) NOT NULL, sexe_animal VARCHAR(8) NOT NULL, INDEX IDX_6AAB231F84ED4CC7 (id_cage_id), UNIQUE INDEX UNIQ_6AAB231F7A15C931 (id_carnet_id), INDEX IDX_6AAB231FAD2CA25D (id_espece_id), INDEX IDX_6AAB231F322DFB53 (id_famille_id), INDEX IDX_6AAB231FF6B192E (id_classe_id), INDEX IDX_6AAB231FC24AA519 (id_ordre_id), INDEX IDX_6AAB231F37C1B5AA (id_comportement_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
         $this->addSql('CREATE TABLE animal_menu (animal_id INT NOT NULL, menu_id INT NOT NULL, INDEX IDX_3A287BA78E962C16 (animal_id), INDEX IDX_3A287BA7CCD7E912 (menu_id), PRIMARY KEY(animal_id, menu_id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
         $this->addSql('CREATE TABLE animal_liste_maladie (animal_id INT NOT NULL, liste_maladie_id INT NOT NULL, INDEX IDX_3623AB3F8E962C16 (animal_id), INDEX IDX_3623AB3FA65B5E01 (liste_maladie_id), PRIMARY KEY(animal_id, liste_maladie_id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
-        $this->addSql('CREATE TABLE animal_comportement (animal_id INT NOT NULL, comportement_id INT NOT NULL, INDEX IDX_198EF6618E962C16 (animal_id), INDEX IDX_198EF661DE9F7622 (comportement_id), PRIMARY KEY(animal_id, comportement_id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
         $this->addSql('CREATE TABLE animal_adoptant (animal_id INT NOT NULL, adoptant_id INT NOT NULL, INDEX IDX_C13729F78E962C16 (animal_id), INDEX IDX_C13729F78D8B49F9 (adoptant_id), PRIMARY KEY(animal_id, adoptant_id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
         $this->addSql('CREATE TABLE cage (id INT AUTO_INCREMENT NOT NULL, fonctionnalite VARCHAR(100) NOT NULL, PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
         $this->addSql('CREATE TABLE carnet_de_sante (id INT AUTO_INCREMENT NOT NULL, numero_carnet INT NOT NULL, PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
@@ -60,12 +59,11 @@ final class Version20251016120719 extends AbstractMigration
         $this->addSql('ALTER TABLE animal ADD CONSTRAINT FK_6AAB231F322DFB53 FOREIGN KEY (id_famille_id) REFERENCES famille (id)');
         $this->addSql('ALTER TABLE animal ADD CONSTRAINT FK_6AAB231FF6B192E FOREIGN KEY (id_classe_id) REFERENCES classe (id)');
         $this->addSql('ALTER TABLE animal ADD CONSTRAINT FK_6AAB231FC24AA519 FOREIGN KEY (id_ordre_id) REFERENCES ordre (id)');
+        $this->addSql('ALTER TABLE animal ADD CONSTRAINT FK_6AAB231F37C1B5AA FOREIGN KEY (id_comportement_id) REFERENCES comportement (id)');
         $this->addSql('ALTER TABLE animal_menu ADD CONSTRAINT FK_3A287BA78E962C16 FOREIGN KEY (animal_id) REFERENCES animal (id) ON DELETE CASCADE');
         $this->addSql('ALTER TABLE animal_menu ADD CONSTRAINT FK_3A287BA7CCD7E912 FOREIGN KEY (menu_id) REFERENCES menu (id) ON DELETE CASCADE');
         $this->addSql('ALTER TABLE animal_liste_maladie ADD CONSTRAINT FK_3623AB3F8E962C16 FOREIGN KEY (animal_id) REFERENCES animal (id) ON DELETE CASCADE');
         $this->addSql('ALTER TABLE animal_liste_maladie ADD CONSTRAINT FK_3623AB3FA65B5E01 FOREIGN KEY (liste_maladie_id) REFERENCES liste_maladie (id) ON DELETE CASCADE');
-        $this->addSql('ALTER TABLE animal_comportement ADD CONSTRAINT FK_198EF6618E962C16 FOREIGN KEY (animal_id) REFERENCES animal (id) ON DELETE CASCADE');
-        $this->addSql('ALTER TABLE animal_comportement ADD CONSTRAINT FK_198EF661DE9F7622 FOREIGN KEY (comportement_id) REFERENCES comportement (id) ON DELETE CASCADE');
         $this->addSql('ALTER TABLE animal_adoptant ADD CONSTRAINT FK_C13729F78E962C16 FOREIGN KEY (animal_id) REFERENCES animal (id) ON DELETE CASCADE');
         $this->addSql('ALTER TABLE animal_adoptant ADD CONSTRAINT FK_C13729F78D8B49F9 FOREIGN KEY (adoptant_id) REFERENCES adoptant (id) ON DELETE CASCADE');
         $this->addSql('ALTER TABLE carnet_de_sante_vaccination ADD CONSTRAINT FK_3DE343DA8B20F9C8 FOREIGN KEY (carnet_de_sante_id) REFERENCES carnet_de_sante (id) ON DELETE CASCADE');
@@ -99,12 +97,11 @@ final class Version20251016120719 extends AbstractMigration
         $this->addSql('ALTER TABLE animal DROP FOREIGN KEY FK_6AAB231F322DFB53');
         $this->addSql('ALTER TABLE animal DROP FOREIGN KEY FK_6AAB231FF6B192E');
         $this->addSql('ALTER TABLE animal DROP FOREIGN KEY FK_6AAB231FC24AA519');
+        $this->addSql('ALTER TABLE animal DROP FOREIGN KEY FK_6AAB231F37C1B5AA');
         $this->addSql('ALTER TABLE animal_menu DROP FOREIGN KEY FK_3A287BA78E962C16');
         $this->addSql('ALTER TABLE animal_menu DROP FOREIGN KEY FK_3A287BA7CCD7E912');
         $this->addSql('ALTER TABLE animal_liste_maladie DROP FOREIGN KEY FK_3623AB3F8E962C16');
         $this->addSql('ALTER TABLE animal_liste_maladie DROP FOREIGN KEY FK_3623AB3FA65B5E01');
-        $this->addSql('ALTER TABLE animal_comportement DROP FOREIGN KEY FK_198EF6618E962C16');
-        $this->addSql('ALTER TABLE animal_comportement DROP FOREIGN KEY FK_198EF661DE9F7622');
         $this->addSql('ALTER TABLE animal_adoptant DROP FOREIGN KEY FK_C13729F78E962C16');
         $this->addSql('ALTER TABLE animal_adoptant DROP FOREIGN KEY FK_C13729F78D8B49F9');
         $this->addSql('ALTER TABLE carnet_de_sante_vaccination DROP FOREIGN KEY FK_3DE343DA8B20F9C8');
@@ -131,7 +128,6 @@ final class Version20251016120719 extends AbstractMigration
         $this->addSql('DROP TABLE animal');
         $this->addSql('DROP TABLE animal_menu');
         $this->addSql('DROP TABLE animal_liste_maladie');
-        $this->addSql('DROP TABLE animal_comportement');
         $this->addSql('DROP TABLE animal_adoptant');
         $this->addSql('DROP TABLE cage');
         $this->addSql('DROP TABLE carnet_de_sante');

@@ -40,9 +40,6 @@ class Animal
     #[ORM\Column(length: 8)]
     private ?string $sexeAnimal = null;
 
-    #[ORM\Column]
-    private bool $adoptable;
-
     /**
      * @var Collection<int, Vaccination>
      */
@@ -85,11 +82,9 @@ class Animal
     #[ORM\ManyToMany(targetEntity: ListeMaladie::class, inversedBy: 'animals')]
     private Collection $idListeMaladie;
 
-    /**
-     * @var Collection<int, Comportement>
-     */
-    #[ORM\ManyToMany(targetEntity: Comportement::class, inversedBy: 'animals')]
-    private Collection $idComportement;
+    #[ORM\ManyToOne(inversedBy: 'animals')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Comportement $idComportement = null;
 
 
     /**
@@ -98,14 +93,15 @@ class Animal
     #[ORM\ManyToMany(targetEntity: Adoptant::class, inversedBy: 'animals')]
     private Collection $idAdoptant;
 
+    #[ORM\Column(type: 'boolean', nullable: true)]
+    private ?bool $adoptable = null;
+
     public function __construct()
     {
         $this->vaccinations = new ArrayCollection();
         $this->idMenu = new ArrayCollection();
         $this->idListeMaladie = new ArrayCollection();
-        $this->idComportement = new ArrayCollection();
         $this->idAdoptant = new ArrayCollection();
-        $this->adoptable = true;
     }
 
     public function getId(): ?int
@@ -209,18 +205,6 @@ class Animal
         return $this;
     }
 
-    public function isAdoptable(): bool
-    {
-        return $this->adoptable;
-    }
-
-    public function setAdoptable(bool $adoptable): self
-    {
-        $this->adoptable = $adoptable;
-
-        return $this;
-    }
-
     /**
      * @return Collection<int, Vaccination>
      */
@@ -289,20 +273,14 @@ class Animal
         return $this;
     }
 
-    /**
-     * @return Collection<int, Comportement>
-     */
-    public function getIdComportement(): Collection
+    public function getIdComportement(): ?Comportement
     {
         return $this->idComportement;
     }
 
-    public function addIdComportement(Comportement $idComportement): static
+    public function setIdComportement(?Comportement $idComportement): static
     {
-        if (!$this->idComportement->contains($idComportement)) {
-            $this->idComportement->add($idComportement);
-        }
-
+        $this->idComportement = $idComportement;
         return $this;
     }
 
@@ -337,12 +315,6 @@ class Animal
         return $this;
     }
 
-        public function removeIdComportement(Comportement $idComportement): static
-        {
-        $this->idComportement->removeElement($idComportement);
-        
-        return $this;
-    }
 
     public function getIdEspece(): ?Espece
     {
@@ -413,6 +385,17 @@ class Animal
     {
         $this->idAdoptant->removeElement($idAdoptant);
 
+        return $this;
+    }
+    
+    public function isAdoptable(): ?bool
+    {
+        return $this->adoptable;
+    }
+
+    public function setAdoptable(?bool $adoptable): static
+    {
+        $this->adoptable = $adoptable;
         return $this;
     }
 }

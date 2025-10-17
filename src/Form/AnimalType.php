@@ -15,6 +15,7 @@ use App\Entity\Menu;
 use App\Entity\Ordre;
 use App\Entity\Vaccination;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -80,8 +81,9 @@ class AnimalType extends AbstractType
             ])
             ->add('idComportement', EntityType::class, [
                 'class' => Comportement::class,
-                'choice_label' => 'id',
-                'multiple' => true,
+                'choice_label' => 'typeComportement',
+                'multiple' => false,
+                'expanded' => false,
             ])
             ->add('idAdoptant', EntityType::class, [
                 'class' => Adoptant::class,
@@ -89,8 +91,8 @@ class AnimalType extends AbstractType
                 'multiple' => true,
             ])
             ->add('adoptable', CheckboxType::class, [
-            'label' => 'Adoptable',
-            'required' => false,
+                'label' => 'Adoptable',
+                'required' => false,
             ])
         ;
     }

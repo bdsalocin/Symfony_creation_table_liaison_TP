@@ -29,23 +29,17 @@
                 <td>{{ animal.dateArrivee ? animal.dateArrivee|date('Y-m-d') : '' }}</td>
             </tr>
             <tr>
-                <th>NomPere</th>
-                <td>{{ animal.nomPere }}</td>
-            </tr>
-            <tr>
-                <th>NomMere</th>
-                <td>{{ animal.nomMere }}</td>
-            </tr>
-            <tr>
                 <th>RaceAnimal</th>
                 <td>{{ animal.raceAnimal }}</td>
             </tr>
             <tr>
-                <th>SexeAnimal</th>
-                <td>{{ animal.sexeAnimal }}</td>
+                <th>ComportementAnimal</th>
+                <td>{{ animal.idComportement ? animal.idComportement.typeComportement : 'Aucun' }}</td>
             </tr>
         </tbody>
     </table>
+
+    <a href{ }}
 
     <a href="{{ path('app_animal_index') }}">back to list</a>
 

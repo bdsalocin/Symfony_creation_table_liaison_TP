@@ -118,10 +118,11 @@ class AppFixtures extends Fixture
             $menus[] = $menu;
         }
 
+        $typesComportement = ['Domestique', 'Sauvage'];
         $comportements = [];
-        for ($i = 1; $i <= 20; $i++) {
+        foreach ($typesComportement as $type) {
             $comportement = new Comportement();
-            $comportement->setTypeComportement('Comportement ' . $i);
+            $comportement->setTypeComportement($type);
             $manager->persist($comportement);
             $comportements[] = $comportement;
         }
@@ -168,7 +169,7 @@ class AppFixtures extends Fixture
                 ->setIdOrdre($ordres[($i - 1) % 20])
                 ->setIdEspece($especes[($i - 1) % 20]);
             $animal->addIdMenu($menus[($i - 1) % 20]);
-            $animal->addIdComportement($comportements[($i - 1) % 20]);
+            $animal->setIdComportement($comportements[($i - 1) % 2]);
             $animal->addIdListeMaladie($maladies[($i - 1) % 20]);
             $manager->persist($animal);
             $animals[] = $animal;

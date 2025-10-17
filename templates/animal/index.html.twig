@@ -14,10 +14,8 @@
                 <th>Pays d'origine</th>
                 <th>Date de Naissance</th>
                 <th>Date d' Arrivee</th>
-                <th>Nom Pere</th>
-                <th>Nom Mere</th>
                 <th>Race Animal</th>
-                <th>Sexe Animal</th>
+                <th>Comportement</th>
                 <th>Id adoptant</th>
                 <th>actions</th>
                 
@@ -31,21 +29,18 @@
                 <td>{{ animal.originePays }}</td>
                 <td>{{ animal.dateNaissance ? animal.dateNaissance|date('Y-m-d') : '' }}</td>
                 <td>{{ animal.dateArrivee ? animal.dateArrivee|date('Y-m-d') : '' }}</td>
-                <td>{{ animal.nomPere }}</td>
-                <td>{{ animal.nomMere }}</td>
                 <td>{{ animal.raceAnimal }}</td>
-                <td>{{ animal.sexeAnimal }}</td>
+                <td>{{ animal.idComportement.typeComportement }}</td>
                 <td>{% for adoptant in animal.idAdoptant %}
                 {{ adoptant.nomAdoptant }}<br>
                 {% else %}
                 Aucun
-            {% endfor %}
-            </td>
+                {% endfor %}</td>
+
                 <td>
                     <a href="{{ path('app_animal_show', {'id': animal.id}) }}">show</a>
                     <a href="{{ path('app_animal_edit', {'id': animal.id}) }}">edit</a>
                     <a href="{{ path('app_adoptant_show', {'id': animal.id}) }}">voir son adoptant</a>
-
                 </td>
             </tr>
         {% else %}
