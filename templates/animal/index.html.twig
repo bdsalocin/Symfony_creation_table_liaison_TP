@@ -38,7 +38,7 @@
                 Aucun
                 {% endfor %}</td>
                 <td>
-                {% if animal.idComportement.typeComportement == 'Domestique' %}
+                {% if animal.idComportement.typeComportement == 'Domestique' and animal.idAdoptant is not null %} 
                 Oui
                 {% else %}
                 Non
