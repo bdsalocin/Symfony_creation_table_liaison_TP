@@ -38,18 +38,19 @@
                 <td>{{ animal.raceAnimal }}</td>
                 <td>{{ animal.idComportement.typeComportement }}</td>
 
-                <td>Bonjour</td>
+                <td> 
+                </td>
                 <td>
                     
-                    {% if animal.idAdoptant is null %}
+                    {% if animal.idAdoptant is not null %}
                         <a href="{{ path('app_adoptant_show', {'id': animal.id}) }}">voir son adoptant</a>
                         {% else %}
-                            Cet animal est n'est pas adopté
+        
                             {% endif %}
                         </td>
                         
                         <td>{% if  animal.idComportement.typeComportement == 'Domestique' and animal.adoptable is null %}
-                        <button><a href="{{ path('app_adoptant_new') }}">Adopter</a></button>
+                        <button><a href="{{ path('app_adoptant_new', {'id': animal.id}) }}">Adopter</a></button>
                         {% else %}
                             Non adoptable
                             {% endif %}

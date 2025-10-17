@@ -13,6 +13,7 @@
                 <th>NomAdoptant</th>
                 <th>PrenomAdoptant</th>
                 <th>AdresseAdoptant</th>
+                <th>Nom de l'animal</th>
                 <th>actions</th>
             </tr>
         </thead>
@@ -23,6 +24,8 @@
                 <td>{{ adoptant.nomAdoptant }}</td>
                 <td>{{ adoptant.prenomAdoptant }}</td>
                 <td>{{ adoptant.adresseAdoptant }}</td>
+                <td></td>
+
                 <td>
                     <a href="{{ path('app_adoptant_show', {'id': adoptant.id}) }}">show</a>
                     <a href="{{ path('app_adoptant_edit', {'id': adoptant.id}) }}">edit</a>
