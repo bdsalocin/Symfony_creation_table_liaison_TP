@@ -36,6 +36,14 @@
                 <th>ComportementAnimal</th>
                 <td>{{ animal.idComportement ? animal.idComportement.typeComportement : 'Aucun' }}</td>
             </tr>
+            <tr>
+                <th>Adoption</th>
+                <td>{% if animal == true %}
+                <button><a href="{{ path('app_adoptant_new') }}">Adopter</a></button>
+                {% else %}
+                Non adoptable
+                {% endif %}
+                
         </tbody>
     </table>
 

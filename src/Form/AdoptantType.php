@@ -19,7 +19,7 @@ class AdoptantType extends AbstractType
             ->add('adresseAdoptant')
             ->add('animals', EntityType::class, [
                 'class' => Animal::class,
-                'choice_label' => 'id',
+                'choice_label' => 'nomAnimal',
                 'multiple' => true,
             ])
         ;
