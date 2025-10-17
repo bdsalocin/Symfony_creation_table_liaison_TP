@@ -3,6 +3,7 @@
 {% block title %}Adoptant index{% endblock %}
 
 {% block body %}
+<main>
     <h1>Adoptant index</h1>
 
     <table class="table">
@@ -36,4 +37,6 @@
     </table>
 
     <a href="{{ path('app_adoptant_new') }}">Create new</a>
+     <a href="{{ path('app_animal_index') }}">back to Animals</a>
+    </main>
 {% endblock %}

@@ -1,3 +1,43 @@
 body {
-    background-color: skyblue;
+    background-color: rgb(237, 250, 237);
+    height: 100vh;
+    margin: 0;
+}
+
+header {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    height: 15vh;
+    gap: 5rem;
+    background-color: rgb(255, 255, 255);
+}
+
+main {
+    height: 70vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 2rem;
+    overflow-y: auto;
+}
+
+footer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 15vh;
+    background-color: rgb(255, 255, 255);
+}
+
+.acceuil {
+    text-decoration: none;
+    font-size: 5rem;
+    color: green;
+}
+
+.brigitte {
+    font-size: 5rem;
+    margin-left: 5rem;
 }

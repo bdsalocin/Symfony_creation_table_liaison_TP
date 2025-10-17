@@ -71,7 +71,7 @@ final class AdoptantController extends AbstractController
     #[Route('/{id}', name: 'app_adoptant_delete', methods: ['POST'])]
     public function delete(Request $request, Adoptant $adoptant, EntityManagerInterface $entityManager): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$adoptant->getId(), $request->getPayload()->getString('_token'))) {
+        if ($this->isCsrfTokenValid('delete' . $adoptant->getId(), $request->getPayload()->getString('_token'))) {
             $entityManager->remove($adoptant);
             $entityManager->flush();
         }

@@ -4,17 +4,14 @@
 
 {% block body %}
 
-<body>
-    <header>
+<main>
 
-        <h1>{{ title }}</h1>
-        <p>On dit merci qui ? Merci Brigitte !</p>
-        
-        <a href="{{ path('app_animal_index') }}">Voir les animaux</a>
-    </header>
+<img src="{{ asset('images/leZoo.jpg') }}" alt="Logo">
 
-</body>
+<a href="{{ path('app_animal_index') }}" class = "acceuil">Voir les animaux</a>
 
+
+</main>
 
 
 

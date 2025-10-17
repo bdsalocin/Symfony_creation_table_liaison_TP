@@ -3,12 +3,13 @@
 {% block title %}Animal index{% endblock %}
 
 {% block body %}
-    <h1>Animal index</h1>
+<main>
+    <h1>les Animaux du refuge</h1>
 
     <table class="table">
         <thead>
             <tr>
-                <th>Id</th>
+                
                 <th>Nom</th>
                 <th>Pays d'origine</th>
                 <th>Date de Naissance</th>
@@ -18,12 +19,13 @@
                 <th>Race Animal</th>
                 <th>Sexe Animal</th>
                 <th>actions</th>
+                
             </tr>
         </thead>
         <tbody>
         {% for animal in animals %}
             <tr>
-                <td>{{ animal.id }}</td>
+               
                 <td>{{ animal.nomAnimal }}</td>
                 <td>{{ animal.originePays }}</td>
                 <td>{{ animal.dateNaissance ? animal.dateNaissance|date('Y-m-d') : '' }}</td>
@@ -35,6 +37,8 @@
                 <td>
                     <a href="{{ path('app_animal_show', {'id': animal.id}) }}">show</a>
                     <a href="{{ path('app_animal_edit', {'id': animal.id}) }}">edit</a>
+                    <a href="{{ path('app_adoptant_show', {'id': animal.id}) }}">voir son adoptant</a>
+
                 </td>
             </tr>
         {% else %}
@@ -46,4 +50,6 @@
     </table>
 
     <a href="{{ path('app_animal_new') }}">Create new</a>
+    <a href="{{ path('home') }}">retour</a>
+    </main>
 {% endblock %}

@@ -64,7 +64,7 @@ class AppFixtures extends Fixture
 
             $allee = new Allee();
             $allee->setNumeroAllee($i)
-                  ->setCage($cage);
+                ->setCage($cage);
             $manager->persist($allee);
             $allees[] = $allee;
         }
@@ -74,18 +74,18 @@ class AppFixtures extends Fixture
         for ($i = 1; $i <= 20; $i++) {
             $employe = new Employe();
             $employe->setNomEmploye('Employe ' . $i)
-                    ->setPrenomEmploye('Prenom ' . $i)
-                    ->setAge(20 + $i)
-                    ->setVille('Ville ' . $i)
-                    ->setSexe($i % 2 === 0 ? 'M' : 'F')
-                    ->setAllee($allees[($i - 1) % 20])
-                    ->setCage($cages[($i - 1) % 20]);
+                ->setPrenomEmploye('Prenom ' . $i)
+                ->setAge(20 + $i)
+                ->setVille('Ville ' . $i)
+                ->setSexe($i % 2 === 0 ? 'M' : 'F')
+                ->setAllee($allees[($i - 1) % 20])
+                ->setCage($cages[($i - 1) % 20]);
             $manager->persist($employe);
             $employes[] = $employe;
 
             $poste = new Poste();
             $poste->setNomPoste('Poste ' . $i)
-                  ->setEmploye($employe);
+                ->setEmploye($employe);
             $manager->persist($poste);
             $postes[] = $poste;
         }
@@ -154,19 +154,19 @@ class AppFixtures extends Fixture
         for ($i = 1; $i <= 20; $i++) {
             $animal = new Animal();
             $animal->setNomAnimal('Animal ' . $i)
-                   ->setOriginePays('Pays ' . $i)
-                   ->setNomPere('Pere ' . $i)
-                   ->setNomMere('Mere ' . $i)
-                   ->setRaceAnimal('Race ' . $i)
-                   ->setSexeAnimal($i % 2 === 0 ? 'M' : 'F')
-                   ->setDateNaissance(new \DateTime('2018-01-01 +' . ($i - 1) . ' days'))
-                   ->setDateArrivee(new \DateTime('2020-06-01 +' . ($i - 1) . ' days'))
-                   ->setIdCage($cages[($i - 1) % 20])
-                   ->setIdCarnet($carnets[($i - 1) % 20])
-                   ->setIdClasse($classes[($i - 1) % 20])
-                   ->setIdFamille($familles[($i - 1) % 20])
-                   ->setIdOrdre($ordres[($i - 1) % 20])
-                   ->setIdEspece($especes[($i - 1) % 20]);
+                ->setOriginePays('Pays ' . $i)
+                ->setNomPere('Pere ' . $i)
+                ->setNomMere('Mere ' . $i)
+                ->setRaceAnimal('Race ' . $i)
+                ->setSexeAnimal($i % 2 === 0 ? 'M' : 'F')
+                ->setDateNaissance(new \DateTime('2018-01-01 +' . ($i - 1) . ' days'))
+                ->setDateArrivee(new \DateTime('2020-06-01 +' . ($i - 1) . ' days'))
+                ->setIdCage($cages[($i - 1) % 20])
+                ->setIdCarnet($carnets[($i - 1) % 20])
+                ->setIdClasse($classes[($i - 1) % 20])
+                ->setIdFamille($familles[($i - 1) % 20])
+                ->setIdOrdre($ordres[($i - 1) % 20])
+                ->setIdEspece($especes[($i - 1) % 20]);
             $animal->addIdMenu($menus[($i - 1) % 20]);
             $animal->addIdComportement($comportements[($i - 1) % 20]);
             $animal->addIdListeMaladie($maladies[($i - 1) % 20]);
@@ -178,8 +178,8 @@ class AppFixtures extends Fixture
         for ($i = 1; $i <= 20; $i++) {
             $adoptant = new Adoptant();
             $adoptant->setNomAdoptant('Adoptant ' . $i)
-                     ->setPrenomAdoptant('PrenomAdoptant ' . $i)
-                     ->setAdresseAdoptant('Adresse ' . $i);
+                ->setPrenomAdoptant('PrenomAdoptant ' . $i)
+                ->setAdresseAdoptant('Adresse ' . $i);
 
             $adoptant->addAnimal($animals[($i - 1) % 20]);
             $manager->persist($adoptant);
@@ -189,16 +189,16 @@ class AppFixtures extends Fixture
         for ($i = 1; $i <= 20; $i++) {
             $adoptantAnimal = new AdoptantAnimal();
             $adoptantAnimal->setDateAdoption(new \DateTime('2023-01-01 +' . ($i - 1) . ' days'))
-                           ->setAdoptant($adoptants[($i - 1) % 20])
-                           ->setAnimal($animals[($i - 1) % 20]);
+                ->setAdoptant($adoptants[($i - 1) % 20])
+                ->setAnimal($animals[($i - 1) % 20]);
             $manager->persist($adoptantAnimal);
         }
 
         for ($i = 1; $i <= 20; $i++) {
             $vaccination = new Vaccination();
             $vaccination->setDateVaccination(new \DateTime('2023-01-10 +' . ($i - 1) . ' days'))
-                        ->setDateProchaineVaccination(new \DateTime('2024-01-10 +' . ($i - 1) . ' days'))
-                        ->setNumeroVaccination($i);
+                ->setDateProchaineVaccination(new \DateTime('2024-01-10 +' . ($i - 1) . ' days'))
+                ->setNumeroVaccination($i);
             $vaccination->addIdAnimal($animals[($i - 1) % 20]);
             $vaccination->addIdListeVaccin($vaccins[($i - 1) % 20]);
             $manager->persist($vaccination);
