@@ -9,15 +9,17 @@
     <table class="table">
         <thead>
             <tr>
-                
+                <th>Voir ou modifier</th>
                 <th>Nom</th>
                 <th>Pays d'origine</th>
                 <th>Date de Naissance</th>
                 <th>Date d' Arrivee</th>
                 <th>Race Animal</th>
                 <th>Comportement</th>
-                <th>Id adoptant</th>
+                <th>Id adoptant</th>    
+                <th>Est adopté ?</th>
                 <th>actions</th>
+
                 
             </tr>
         </thead>
@@ -36,6 +38,7 @@
                 <td>{{ animal.raceAnimal }}</td>
                 <td>{{ animal.idComportement.typeComportement }}</td>
 
+                <td>Bonjour</td>
                 <td>
                     
                     {% if animal.idAdoptant is null %}
@@ -44,6 +47,7 @@
                             Cet animal est n'est pas adopté
                             {% endif %}
                         </td>
+                        
                         <td>{% if  animal.idComportement.typeComportement == 'Domestique' and animal.adoptable is null %}
                         <button><a href="{{ path('app_adoptant_new') }}">Adopter</a></button>
                         {% else %}
