@@ -28,8 +28,8 @@ main {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    gap: 1rem;
     padding: 2rem 0;
+    flex-grow: 1;
 }
 
 th {
