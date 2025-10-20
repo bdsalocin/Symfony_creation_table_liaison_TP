@@ -90,8 +90,8 @@ class Animal
     /**
      * @var Collection<int, Adoptant>
      */
-    #[ORM\ManyToMany(targetEntity: Adoptant::class, inversedBy: 'animals')]
-    private Collection $idAdoptant;
+    #[ORM\ManyToOne(inversedBy: 'animals')]
+    private ?Adoptant $idAdoptant = null;
 
     #[ORM\Column(type: 'boolean', nullable: true)]
     private ?bool $adoptable = null;
@@ -355,9 +355,16 @@ class Animal
     /**
      * @return Collection<int, Adoptant>
      */
-    public function getIdAdoptant(): Collection
+
+    public function getIdAdoptant(): ?Adoptant
     {
         return $this->idAdoptant;
+    }
+
+    public function setIdAdoptant(?Adoptant $idAdoptant): static
+    {
+        $this->idAdoptant = $idAdoptant;
+        return $this;
     }
 
     public function addIdAdoptant(Adoptant $idAdoptant): static
