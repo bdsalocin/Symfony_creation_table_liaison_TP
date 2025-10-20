@@ -1,0 +1,75 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Animal index{% endblock %}
+
+{% block body %}
+
+<main>
+    <h1>Les Animaux du refuge</h1>
+
+    {% for animal in animals %}
+        <div class="carteAnimal">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Voir ou modifier</th>
+                        <th>Image</th>
+                        <th>Nom</th>
+                        <th>Pays d'origine</th>
+                        <th>Date de Naissance</th>
+                        <th>Date d'Arrivée</th>
+                        <th>Race Animal</th>
+                        <th>Comportement</th>
+                        <th>Id adoptant</th>
+                        <th>Est adopté ?</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>
+                            <a href="{{ path('app_animal_show', {'id': animal.id}) }}">show</a>
+                            <a href="{{ path('app_animal_edit', {'id': animal.id}) }}">edit</a>
+                        </td>
+                        <td> <img src="/assets/img/OIP.8ot8Y45H1REeX7fKQCwRVQHaE9.webp" alt="" width="100" height="100"></td>
+                        <td>{{ animal.nomAnimal }}</td>
+                        <td>{{ animal.originePays }}</td>
+                        <td>{{ animal.dateNaissance ? animal.dateNaissance|date('Y-m-d') : '' }}</td>
+                        <td>{{ animal.dateArrivee ? animal.dateArrivee|date('Y-m-d') : '' }}</td>
+                        <td>{{ animal.raceAnimal }}</td>
+                        <td>{{ animal.idComportement.typeComportement }}</td>
+                        <td>
+                            {% if animal.idAdoptant is not null %}
+                                <a href="{{ path('app_adoptant_show', {'id': animal.idAdoptant}) }}">voir son adoptant</a>
+                            {% else %}
+                                Aucun
+                            {% endif %}
+                        </td>
+                        <td>
+                            {% if  animal is null %}
+                                Oui
+                                {% else %}
+                                    Non
+                            {% endif %}
+                        </td>
+                        <td>
+                            {% if animal.idComportement.typeComportement == 'Domestique' or animal.adoptable %}
+                                <a class="btn" href="{{ path('app_adoptant_new', {'id': animal.id}) }}">Adopter</a>
+                            {% else %}
+                                Non adoptable
+                            {% endif %}
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    {% else %}
+        <p>Aucun animal trouvé.</p>
+    {% endfor %}
+
+    <div class="actions">
+        <a href="{{ path('app_animal_new') }}">Créer un nouvel animal</a>
+        <a href="{{ path('home') }}">Retour</a>
+    </div>
+</main>
+{% endblock %}

@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New Allee{% endblock %}
+
+{% block body %}
+    <h1>Create new Allee</h1>
+
+    {{ include('allee/_form.html.twig') }}
+
+    <a href="{{ path('app_allee_index') }}">back to list</a>
+{% endblock %}

@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New CompositionMenu{% endblock %}
+
+{% block body %}
+    <h1>Create new CompositionMenu</h1>
+
+    {{ include('composition_menu/_form.html.twig') }}
+
+    <a href="{{ path('app_composition_menu_index') }}">back to list</a>
+{% endblock %}

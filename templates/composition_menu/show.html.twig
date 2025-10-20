@@ -1,0 +1,26 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}CompositionMenu{% endblock %}
+
+{% block body %}
+    <h1>CompositionMenu</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ composition_menu.id }}</td>
+            </tr>
+            <tr>
+                <th>Quantite</th>
+                <td>{{ composition_menu.quantite }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_composition_menu_index') }}">back to list</a>
+
+    <a href="{{ path('app_composition_menu_edit', {'id': composition_menu.id}) }}">edit</a>
+
+    {{ include('composition_menu/_delete_form.html.twig') }}
+{% endblock %}
